@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🎂</title>
+    <title>Happy Birthday Anya! 🎂</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -320,7 +320,7 @@
             <div class="envelope">
                 <div class="flap"></div>
                 <div class="pocket"></div>
-                <div class="letter-preview">For You ❤️</div>
+                <div class="letter-preview">Spesial untuk Anya ❤️</div>
             </div>
         </div>
         <div class="hint-text">Klik amplopnya untuk membuka 💌</div>
@@ -328,7 +328,7 @@
 
     <!-- SCENE 2: KUE & LILIN -->
     <div class="scene" id="scene-cake">
-        <h1 class="birthday-title">Happy Birthday! 🎉</h1>
+        <h1 class="birthday-title">Happy Birthday, Anya! 🎉</h1>
         <div class="cake-container">
             <div class="cake" id="cake">
                 <div class="candles">
@@ -347,14 +347,14 @@
     <!-- SCENE 3: SURAT -->
     <div class="scene" id="scene-letter">
         <div class="letter-card">
-            <h2 class="letter-title">Selamat Ulang Tahun!</h2>
+            <h2 class="letter-title">Selamat Ulang Tahun, Anya!</h2>
             <p id="typewriter-text"></p><span class="cursor">|</span>
         </div>
     </div>
 
-    <!-- AUDIO (Link sudah diperbarui) -->
+    <!-- AUDIO -->
     <audio id="bg-music" loop>
-        <source src="https://happybirthdayanya.vercel.app/lagu.mp3" type="audio/mpeg">
+        <source src="https://happybirthdayanya-ten.vercel.app/lagu.mp3" type="audio/mpeg">
     </audio>
     <button class="music-control" id="music-btn" onclick="toggleMusic()">🎵</button>
 
@@ -369,7 +369,7 @@
             
             // Putar musik
             const audio = document.getElementById('bg-music');
-            audio.volume = 0.5; // Volume dinaikkan sedikit agar terdengar jelas
+            audio.volume = 0.5; 
             audio.play().catch(e => console.log("Autoplay diblokir browser, perlu interaksi user"));
             document.getElementById('music-btn').style.display = 'block';
 
@@ -417,9 +417,8 @@
             if (num === 3) return 'letter';
         }
 
-        // 3. EFEK MENGETIK
-        // GANTI PESAN DI SINI (\n untuk baris baru)
-        const message = "Hai! 🌸\n\nDi hari spesialmu ini, aku cuma mau bilang...\nSemoga semua impian dan harapanmu terwujud.\n\nTetap jadi pribadi yang ceria, kuat, dan selalu menginspirasi! Terima kasih sudah jadi teman yang luar biasa dan selalu ada di saat suka maupun duka.\n\nSemoga tahun ini membawa lebih banyak kebahagiaan, rezeki, dan momen indah yang tak terlupakan.\n\nHappy Birthday! 🎂💖";
+        // 3. EFEK MENGETIK (PESAN KHUSUS ANYA)
+        const message = "Anya! 🌸\n\nHappy Birthday! 🎉\n\nSelamat Ulang Tahunnya dan di hari ulang tahun ini menambah usia kamu yang awalnya 19 menjadi 20, menambah 1 tahun dan makin tua aja tapi.... jangan lupa ampaunya wkwkwkwkk \ncandaaa doang yahh.. anya dan jangan marah-marah terus saat saya masuk room.. \n\nSemoga tahun ini membawa lebih banyak kebahagiaan, rezeki yang lancar, dan momen-momen indah yang tak terlupakan.\n\nHave a wonderful birthday, Anya! 🎂💖";
         
         let index = 0;
         function typeWriter() {
@@ -428,7 +427,7 @@
                 const displayChar = char === '\n' ? '<br>' : char;
                 document.getElementById("typewriter-text").innerHTML += displayChar;
                 index++;
-                setTimeout(typeWriter, 50); // Kecepatan mengetik
+                setTimeout(typeWriter, 55); // Kecepatan mengetik (sedikit diperlambat agar lebih dramatis)
             } else {
                 document.querySelector('.cursor').style.display = 'none';
             }
