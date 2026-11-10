@@ -1,1 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        /* --- SYSTEM SCENE (Halaman) --- */
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: scale(0.95);
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+        }
+
+        /* ================= SCENE 1: AMPLOP ================= */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #f8d7da;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 120px solid #f1b0b7;
+            transform-origin: top;
+            transition: transform 0.6s ease, z-index 0.2s;
+            z-index: 3;
+        }
+
+        .pocket {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 110px solid #f5c6cb;
+            z-index: 2;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .letter-preview {
+            position: absolute;
+            bottom: 10px; left: 50%;
+            transform: translateX(-50%);
+            width: 260px; height: 140px;
+            background: #fff;
+            border-radius: 8px;
+            z-index: 1;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.4s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #ff758c;
+        }
+
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter-preview { transform: translateX(-50%) translateY(-120px); }
+        .hint-text { text-align: center; color: white; margin-top: 40px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* ================= SCENE 2: KUE & LILIN ================= */
+        .cake-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .birthday-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cake {
+            position: relative;
+            width: 250px;
+            height: 200px;
+            margin: 0 auto 40px;
+        }
+
+        .layer {
+            position: absolute;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .layer-bottom {
+            bottom: 0; height: 80px;
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .layer-middle {
+            bottom: 80px; height: 70px; width: 90%; left: 5%;
+            background: linear-gradient(to right, #a18cd1, #fbc2eb);
+            border-radius: 10px 10px 5px 5px;
+        }
+
+        .layer-top {
+            bottom: 150px; height: 50px; width: 80%; left: 10%;
+            background: #fff;
+            border-radius: 10px 10px 0 0;
+            background-image: radial-gradient(circle at 10px 10px, #fbc2eb 10px, transparent 11px);
+            background-size: 20px 20px;
+        }
+
+        .candles {
+            position: absolute;
+            bottom: 200px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .candle {
+            width: 12px;
+            height: 40px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff758c 5px, #ff758c 10px);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -20px; left: 50%;
+            transform: translateX(-50%);
+            width: 16px; height: 24px;
+            background: radial-gradient(ellipse at bottom, #ffd700 0%, #ff8c00 100%);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ff8c00, 0 0 30px #ffd700;
+            animation: flicker 0.1s infinite alternate;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
+        }
+
+        .cake.blown .flame {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+        
+        .cake.blown .candle::after {
+            content: '💨';
+            position: absolute;
+            top: -30px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            animation: smoke 1s ease forwards;
+        }
+
+        @keyframes smoke {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+        }
+
+        .blow-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .blow-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 117, 140, 0.6); }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* ================= SCENE 3: SURAT ================= */
+        .letter-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        .letter-card::before {
+            content: '💌';
+            position: absolute;
+            top: -25px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            background: white;
+            border-radius: 50%;
+            width: 60px; height: 60px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .letter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #ff758c;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        #typewriter-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: left;
+            white-space: pre-wrap;
+            min-height: 150px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #ff758c;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- PARTIKEL & CONFETTI --- */
+        .particle, .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle { bottom: -50px; animation: floatUp linear forwards; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+        .confetti {
+            width: 10px; height: 10px;
+            top: -10px;
+            animation: confettiFall 3s linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .music-control {
+            position: fixed; bottom: 20px; right: 20px;
+            background: rgba(255,255,255,0.8); border: none;
+            border-radius: 50%; width: 50px; height: 50px;
+            font-size: 1.5rem; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: none; z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCENE 1: AMPLOP -->
+    <div class="scene active" id="scene-envelope">
+        <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="pocket"></div>
+                <div class="letter-preview">For You ❤️</div>
+            </div>
+        </div>
+        <div class="hint-text">Klik amplopnya untuk membuka 💌</div>
+    </div>
+
+    <!-- SCENE 2: KUE & LILIN -->
+    <div class="scene" id="scene-cake">
+        <h1 class="birthday-title">Happy Birthday! 🎉</h1>
+        <div class="cake-container">
+            <div class="cake" id="cake">
+                <div class="candles">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+                <div class="layer layer-top"></div>
+                <div class="layer layer-middle"></div>
+                <div class="layer layer-bottom"></div>
+            </div>
+            <button class="blow-btn" id="blow-btn" onclick="blowCandles()">🌬️ Tiup Lilinnya!</button>
+        </div>
+    </div>
+
+    <!-- SCENE 3: SURAT -->
+    <div class="scene" id="scene-letter">
+        <div class="letter-card">
+            <h2 class="letter-title">Selamat Ulang Tahun!</h2>
+            <p id="typewriter-text"></p><span class="cursor">|</span>
+        </div>
+    </div>
+
+    <!-- AUDIO (Link sudah diperbarui) -->
+    <audio id="bg-music" loop>
+        <source src="https://happybirthdayanya.vercel.app/lagu.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-control" id="music-btn" onclick="toggleMusic()">🎵</button>
+
+    <script>
+        let currentScene = 1;
+        let isBlown = false;
+
+        // 1. BUKA AMPLOP
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+            
+            // Putar musik
+            const audio = document.getElementById('bg-music');
+            audio.volume = 0.5; // Volume dinaikkan sedikit agar terdengar jelas
+            audio.play().catch(e => console.log("Autoplay diblokir browser, perlu interaksi user"));
+            document.getElementById('music-btn').style.display = 'block';
+
+            // Tunggu animasi amplop selesai, lalu pindah scene
+            setTimeout(() => {
+                switchScene(1, 2);
+                createParticles();
+            }, 1500);
+        }
+
+        // 2. TIUP LILIN
+        function blowCandles() {
+            if (isBlown) return;
+            isBlown = true;
+
+            const cake = document.getElementById('cake');
+            const btn = document.getElementById('blow-btn');
+            
+            cake.classList.add('blown');
+            btn.textContent = '🎉 Yeay! 🎉';
+            btn.style.animation = 'none';
+            btn.style.background = '#4CAF50';
+
+            // Efek Confetti
+            createConfetti();
+
+            // Pindah ke scene surat setelah 2 detik
+            setTimeout(() => {
+                switchScene(2, 3);
+                setTimeout(typeWriter, 800); // Mulai ngetik setelah scene muncul
+            }, 2000);
+        }
+
+        // FUNGSI PINDAH SCENE
+        function switchScene(from, to) {
+            document.getElementById(`scene-${getSceneName(from)}`).classList.remove('active');
+            setTimeout(() => {
+                document.getElementById(`scene-${getSceneName(to)}`).classList.add('active');
+            }, 300);
+        }
+
+        function getSceneName(num) {
+            if (num === 1) return 'envelope';
+            if (num === 2) return 'cake';
+            if (num === 3) return 'letter';
+        }
+
+        // 3. EFEK MENGETIK
+        // GANTI PESAN DI SINI (\n untuk baris baru)
+        const message = "Hai! 🌸\n\nDi hari spesialmu ini, aku cuma mau bilang...\nSemoga semua impian dan harapanmu terwujud.\n\nTetap jadi pribadi yang ceria, kuat, dan selalu menginspirasi! Terima kasih sudah jadi teman yang luar biasa dan selalu ada di saat suka maupun duka.\n\nSemoga tahun ini membawa lebih banyak kebahagiaan, rezeki, dan momen indah yang tak terlupakan.\n\nHappy Birthday! 🎂💖";
+        
+        let index = 0;
+        function typeWriter() {
+            if (index < message.length) {
+                const char = message.charAt(index);
+                const displayChar = char === '\n' ? '<br>' : char;
+                document.getElementById("typewriter-text").innerHTML += displayChar;
+                index++;
+                setTimeout(typeWriter, 50); // Kecepatan mengetik
+            } else {
+                document.querySelector('.cursor').style.display = 'none';
+            }
+        }
+
+        // 4. CONFETTI (Saat tiup lilin)
+        function createConfetti() {
+            const colors = ['#ff758c', '#ff7eb3', '#a18cd1', '#fbc2eb', '#ffd700', '#4CAF50'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        // 5. PARTIKEL BACKGROUND
+        function createParticles() {
+            const emojis = ['💖', '✨', '🌸', '🎈', '🎀'];
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 8000);
+            }, 400);
+        }
+
+        // 6. KONTROL MUSIK
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '🎵';
+            } else {
+                audio.pause();
+                btn.innerHTML = '🔇';
+            }
+        }
+    </script>
+</body>
+</html>
